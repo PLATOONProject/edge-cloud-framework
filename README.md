@@ -31,7 +31,7 @@ To install the Edge-Cloud Framework, please follow the steps below.
 
 Download (use the download button > Download ZIP and unzip) or clone this repository to the cloud server.
 
-    git clone git@github.com:platoon/edge-cloud-framework.git
+    git clone git@github.com:PLATOONProject/edge-cloud-framework.git
 
 Before proceeding, please make sure you are inside the downloaded directory and `configure-vpn.sh` / `configure-ssh.sh` / `install.sh` scripts are executable.
 
