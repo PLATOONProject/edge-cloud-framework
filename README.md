@@ -2,8 +2,9 @@
 
 The Edge-Cloud Framework is composed of tools for deploying Docker services and managing/automating the edge/cloud infrastructure. The Framework consists of the following tools:
 
-- Portainer - an open source tool for managing containerized applications [[documentation](https://documentation.portainer.io/)]
-- Rundeck - an open source service for running automation tasks across a set of nodes [[documentation](https://docs.rundeck.com/docs/manual/01-introduction.html)]
+- Portainer - an open-source tool for managing containerized applications [[documentation](https://documentation.portainer.io/)]
+- Rundeck - an open-source service for running automation tasks across a set of nodes [[documentation](https://docs.rundeck.com/docs/manual/01-introduction.html)]
+- Munin - an open-source application for monitoring computer systems, networks and infrastructure [[documentation](https://munin-monitoring.org/documentation/)]
 
 The Framework deployment installs and configures the tools, sets up SSH keys and a VPN on a cloud server, as well as the edge nodes. 
 
@@ -122,18 +123,22 @@ For example:
 
 Depending on your setup, the script might prompt you for sudo passwords of edge nodes' users or to confirm key fingerprints during the installation. Type `yes` or enter password and press `enter` where appropriate.
 
+## 5. Configure Rundeck/Munin (optional)
+
+Please note that the edge nodes have to be configured manually to be used by Rundeck and Munin.
+
+- Rundeck configuration: To configure the edge nodes, please follow the [tutorial](https://docs.rundeck.com/docs/learning/tutorial/creatingnodes.html) and [how-to](https://docs.rundeck.com/docs/learning/howto/ssh-on-linux-nodes.html).
+- Munin configuration: To configure the edge nodes, please follow the [instructions](https://munin-monitoring.org/download/). The edge nodes from `nodes.txt` are automatically added to the Munin server on the cloud server during the Framework installation, nodes are named as `node-X-Y-Z-W`, where `X`, `Y`, `Z`, and `W` denote parts of the node's IP address `X.Y.Z.W` as defined in `nodes.txt`.
 
 # Framework Usage
 
-Upon installing the Framework on the cloud server, navigate to http://localhost:4440/ to access Rundeck. Portainer will expose the UI over the port 9000: http://localhost:9000/. When accessing Portainer for the first time, a prompt for setting up an admin password will appear.
+Upon installing the Framework on the cloud server, navigate to http://localhost:4440/ to access Rundeck. Portainer will expose the UI over the port 9000: http://localhost:9000/. Munin is available at http://localhost:7000/munin/. When accessing Portainer for the first time, a prompt for setting up an admin password will appear.
 
 The login credentials for Rundeck will be by default set as:
 
 **Username:** admin
 
 **Password:** admin
-
-Please note that the automatic configuration of the edge nodes in Rundeck is not yet available (TODO).
 
 
 # Author and License

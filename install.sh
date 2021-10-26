@@ -76,3 +76,27 @@ docker volume create rundeck_data
 docker stop rundeck
 docker rm rundeck
 docker run -d --name rundeck --restart=always -e RUNDECK_GRAILS_URL=/. -p 4440:4440 -v rundeck_data:/home/rundeck/server/data -v "${HOME}/.ssh":/home/rundeck/.ssh rundeck/rundeck:3.4.0
+
+# Create nodes config string for Munin.
+nodes=""
+while read -r <&3 line; do
+  host=$(echo "$line" | tr -d '[:space:]')
+  host="${host##*@}"
+  nodes="${nodes}node-${host//./$'-'}:${host} "
+done 3< nodes.txt
+
+echo "Installing munin, node config: ${nodes}"
+
+# Install Munin.
+docker stop munin-server
+docker rm munin-server
+docker run -d \
+  -v /etc/munin/munin-conf.d:/etc/munin/munin-conf.d \
+  -v /etc/munin/plugin-conf.d:/etc/munin/plugin-conf.d \
+  -v /var/lib/munin:/var/lib/munin \
+  -v /var/log/munin:/var/log/munin \
+  -e NODES="${nodes}" \
+  -p 7000:80 \
+  --restart=always \
+  --name munin-server \
+  aheimsbakk/munin-alpine
